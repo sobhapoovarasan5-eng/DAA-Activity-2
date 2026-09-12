@@ -1,0 +1,70 @@
+class Trie {
+public:
+
+    struct Node {
+        Node* child[26];
+        bool isEnd;
+
+        Node() {
+            isEnd = false;
+
+            for (int i = 0; i < 26; i++) {
+                child[i] = NULL;
+            }
+        }
+    };
+
+    Node* root;
+
+    Trie() {
+        root = new Node();
+    }
+
+    void insert(string word) {
+        Node* current = root;
+
+        for (char c : word) {
+            int index = c - 'a';
+
+            if (current->child[index] == NULL) {
+                current->child[index] = new Node();
+            }
+
+            current = current->child[index];
+        }
+
+        current->isEnd = true;
+    }
+
+    bool search(string word) {
+        Node* current = root;
+
+        for (char c : word) {
+            int index = c - 'a';
+
+            if (current->child[index] == NULL) {
+                return false;
+            }
+
+            current = current->child[index];
+        }
+
+        return current->isEnd;
+    }
+
+    bool startsWith(string prefix) {
+        Node* current = root;
+
+        for (char c : prefix) {
+            int index = c - 'a';
+
+            if (current->child[index] == NULL) {
+                return false;
+            }
+
+            current = current->child[index];
+        }
+
+        return true;
+    }
+};
